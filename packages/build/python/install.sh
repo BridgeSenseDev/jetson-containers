@@ -26,7 +26,7 @@ apt-get clean
 curl -sS https://bootstrap.pypa.io/get-pip.py | python${PYTHON_VERSION} || \
 curl -sS https://bootstrap.pypa.io/pip/3.6/get-pip.py | python3.6
 
-ln -s /usr/bin/python${PYTHON_VERSION} /usr/local/bin/python3
+ln -sf /usr/bin/python${PYTHON_VERSION} /usr/local/bin/python3
 #ln -s /usr/bin/pip${PYTHON_VERSION} /usr/local/bin/pip3
 
 # this was causing issues downstream (e.g. Python2.7 still around in Ubuntu 18.04, \
