@@ -5,7 +5,7 @@
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 
-RUN pip3 install --ignore-installed --no-cache-dir blinker
+RUN pip3 install --ignore-installed --no-cache-dir blinker adafruit_ssd1306 jetson.gpio
 
 #####################################
 # Install jtop
@@ -22,7 +22,6 @@ RUN python3 -m pip install git+https://github.com/NVIDIA-AI-IOT/jetracer
 RUN echo "\e[44m Install jetcard \e[0m"
 RUN cd $HOME
 RUN git clone https://github.com/BridgeSenseDev/jetcard.git
-RUN cd jetcard && python3 setup.py install
 
 #####################################
 # Install traitlets
@@ -40,8 +39,11 @@ ENV SHELL /bin/bash
 SHELL ["/bin/bash", "-c"] 
 
 # Copy the start_jupyter script and test.py script
+COPY jupyter_server_config.json /root/.jupyter/
 COPY start_jupyter /
-COPY jetcard/ /
 COPY entrypoint.sh /
+
+RUN chmod +x /entrypoint.sh
+RUN chmod +x /start_jupyter
 
 CMD /entrypoint.sh
